@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RotateCcw, Lock, Pencil } from "lucide-react";
+import { RotateCcw, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -13,7 +13,7 @@ interface GenesisArtifactProps {
   onTextChange: (text: string) => void;
   onRegenerate: () => void;
   onFinalize: () => void;
-  onBackToForm: () => void;
+  onBackToForm?: () => void;
 }
 
 export function GenesisArtifact({
@@ -23,7 +23,6 @@ export function GenesisArtifact({
   onTextChange,
   onRegenerate,
   onFinalize,
-  onBackToForm,
 }: GenesisArtifactProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -127,26 +126,15 @@ export function GenesisArtifact({
           >
             <div className="flex items-center gap-3">
               {!isFinalized && (
-                <>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={onBackToForm}
-                    className="gap-1.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Pencil className="h-3.5 w-3.5" strokeWidth={1.5} />
-                    修改表单
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={onRegenerate}
-                    className="gap-1.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.5} />
-                    重新生成
-                  </Button>
-                </>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onRegenerate}
+                  className="gap-1.5 text-muted-foreground hover:text-foreground"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.5} />
+                  重新生成
+                </Button>
               )}
             </div>
 
