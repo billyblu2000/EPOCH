@@ -3,14 +3,21 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Feather } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function LandingPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/dashboard");
-    }, 2500);
+    const supabase = createClient();
+    const timer = setTimeout(async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        router.push("/dashboard");
+      } else {
+        router.push("/auth/login");
+      }
+    }, 2000);
     return () => clearTimeout(timer);
   }, [router]);
 
@@ -22,7 +29,7 @@ export default function LandingPage() {
           纪元
         </h1>
         <p className="text-sm tracking-wider text-muted-foreground">
-          人筑骨，机填肉
+          AI 协作长篇小说创作系统
         </p>
         <div className="mt-8 h-px w-32 bg-gradient-to-r from-transparent via-golden/30 to-transparent" />
       </div>

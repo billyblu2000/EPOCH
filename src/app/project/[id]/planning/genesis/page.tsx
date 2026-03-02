@@ -7,18 +7,33 @@ import { Container } from "@/components/layout/container";
 import { GenesisFormComponent } from "@/components/genesis/genesis-form";
 import { GenesisArtifact } from "@/components/genesis/genesis-artifact";
 import { useProjectStore } from "@/stores/project-store";
+import { getProviderKey } from "@/lib/ai-keys";
+import { getModelConfig } from "@/lib/ai/model-config";
 import type { GenesisForm } from "@/types";
 
 type Phase = "form" | "generating" | "artifact" | "ritual" | "finalized";
 
 async function* streamGenesisAPI(data: GenesisForm): AsyncIterable<string> {
+  const config = getModelConfig("genesis");
+  const apiKey = getProviderKey(config.provider);
+  if (!apiKey) {
+    throw new Error("未配置 AI API Key。请点击右上角头像 → 设置，配置 API Key。");
+  }
+
   const res = await fetch("/api/ai/genesis", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-ai-api-key": apiKey,
+    },
     body: JSON.stringify(data),
   });
 
   if (!res.ok || !res.body) {
+    if (res.status === 401) {
+      const json = await res.json().catch(() => ({}));
+      throw new Error(json.error || "未配置 API Key");
+    }
     throw new Error(`API error: ${res.status}`);
   }
 

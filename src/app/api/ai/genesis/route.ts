@@ -4,8 +4,17 @@ import type { GenesisForm } from "@/types";
 
 export async function POST(req: NextRequest) {
   try {
+    // Read API key from request header (sent from client localStorage)
+    const apiKey = req.headers.get("x-ai-api-key");
+    if (!apiKey) {
+      return new Response(
+        JSON.stringify({ error: "未配置 AI API Key。请前往设置页面配置。" }),
+        { status: 401, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const body = (await req.json()) as GenesisForm;
-    const service = new SiliconFlowAIService();
+    const service = new SiliconFlowAIService(apiKey);
 
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
