@@ -7,10 +7,30 @@ import { Container } from "@/components/layout/container";
 import { GenesisFormComponent } from "@/components/genesis/genesis-form";
 import { GenesisArtifact } from "@/components/genesis/genesis-artifact";
 import { useProjectStore } from "@/stores/project-store";
-import { aiService } from "@/lib/ai/mock-service";
 import type { GenesisForm } from "@/types";
 
 type Phase = "form" | "generating" | "artifact" | "ritual" | "finalized";
+
+async function* streamGenesisAPI(data: GenesisForm): AsyncIterable<string> {
+  const res = await fetch("/api/ai/genesis", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok || !res.body) {
+    throw new Error(`API error: ${res.status}`);
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    yield decoder.decode(value, { stream: true });
+  }
+}
 
 export default function GenesisPage() {
   const params = useParams();
@@ -35,7 +55,7 @@ export default function GenesisPage() {
 
       let buffer = "";
       try {
-        for await (const chunk of aiService.generateGenesis(data)) {
+        for await (const chunk of streamGenesisAPI(data)) {
           if (abortRef.current) break;
           buffer += chunk;
           setArtifactText(buffer);
@@ -102,15 +122,7 @@ export default function GenesisPage() {
             >
               创世已成
             </motion.p>
-            {/* 仪式文字 */}
-            <motion.p
-              initial={{ opacity: 0, letterSpacing: "0.1em" }}
-              animate={{ opacity: 1, letterSpacing: "0.5em" }}
-              transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
-              className="text-[10px] font-light text-golden/50 uppercase mb-2"
-            >
-              — T H E · G E N E S I S · I S · C O M P L E T E —
-            </motion.p>
+            
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

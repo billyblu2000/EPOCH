@@ -11,7 +11,7 @@ export const genesisFormSchema = z.object({
   genre: z.string().default(""),
   target_reader: z.string().default(""),
   perspective: z.string().default(""),
-  protagonist: protagonistSchema.default({}),
+  protagonist: protagonistSchema.default({ gender: "", age_range: "", traits: [] }),
 
   // 工程指标
   chapter_word_target: z.coerce.number().nullable().default(null),

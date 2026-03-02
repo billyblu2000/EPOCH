@@ -24,7 +24,7 @@ const sectionVariants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.5, ease: "easeOut" },
+    transition: { delay: i * 0.12, duration: 0.5, ease: "easeOut" as const },
   }),
 };
 
@@ -37,7 +37,8 @@ export function GenesisFormComponent({ onSubmit, defaultValues, isDisabled }: Ge
     watch,
     setValue,
   } = useForm<GenesisFormValues>({
-    resolver: zodResolver(genesisFormSchema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(genesisFormSchema) as any,
     defaultValues: {
       genre: "",
       target_reader: "",
