@@ -2,26 +2,325 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap');
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@layer base {
+  /* EPOCH 白玉圣洁主题 — 亮色模式 */
+  :root {
+    --background: 0 0% 99%;           /* #FCFCFC 白玉底 */
+    --foreground: 240 6% 10%;         /* #18181B 墨色正文 */
+    --card: 0 0% 100%;               /* #FFFFFF 纯白卡片 */
+    --card-foreground: 240 6% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 6% 10%;
+    --primary: 240 6% 10%;           /* 墨色主按钮 */
+    --primary-foreground: 0 0% 99%;
+    --secondary: 240 5% 96%;         /* #F4F4F5 zinc-100 微灰 */
+    --secondary-foreground: 240 6% 10%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;   /* #71717A zinc-500 次要文字 */
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 72% 51%;         /* 柔红 */
+    --destructive-foreground: 0 0% 99%;
+    --border: 240 6% 90%;            /* #E4E4E7 zinc-200 玉色边框 */
+    --input: 240 6% 90%;
+    --ring: 240 6% 10%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+/* ============================================================
+   神性设计系统 — 动效与视觉层
+   ============================================================ */
+
+/* 神性点睛 - 金色辉光效果 */
+.glow-golden {
+  box-shadow: 0 0 20px rgba(180, 130, 70, 0.08);
+}
+
+.glow-golden-hover:hover {
+  box-shadow: 0 0 30px rgba(180, 130, 70, 0.16);
+  transition: box-shadow 0.4s ease-out;
+}
+
+/* 纪元标题衬线体 */
+.font-epoch {
+  font-family: "Noto Serif SC", Georgia, serif;
+}
+
+/* 写作区域 */
+.writing-area {
+  font-family: "Noto Serif SC", Georgia, serif;
+  line-height: 2;
+  max-width: 720px;
+}
+
+/* ---- 呼吸光效系列 ---- */
+
+/* AI 生成呼吸光效 — 边框金色脉动 */
+@keyframes breath-glow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(180, 130, 70, 0.06), 0 0 4px rgba(180, 130, 70, 0.03);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(180, 130, 70, 0.20), 0 0 8px rgba(180, 130, 70, 0.10);
+  }
+}
+
+.animate-breath {
+  animation: breath-glow 2.5s ease-in-out infinite;
+}
+
+/* 圣殿呼吸 — 极淡金色背景脉动，用于激活区域 */
+@keyframes sanctuary-breath {
+  0%, 100% {
+    background-color: rgba(180, 130, 70, 0.02);
+  }
+  50% {
+    background-color: rgba(180, 130, 70, 0.06);
+  }
+}
+
+.animate-sanctuary {
+  animation: sanctuary-breath 4s ease-in-out infinite;
+}
+
+/* 灵光闪烁 — 用于生成中的光标/指示器 */
+@keyframes spirit-flicker {
+  0%, 100% { opacity: 0.3; }
+  25% { opacity: 1; }
+  50% { opacity: 0.5; }
+  75% { opacity: 0.9; }
+}
+
+.animate-spirit {
+  animation: spirit-flicker 1.5s ease-in-out infinite;
+}
+
+/* ---- 流光效果 ---- */
+
+/* 金色流光扫过 — 用于按钮 hover */
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-golden {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(180, 130, 70, 0.08) 25%,
+    rgba(212, 165, 116, 0.15) 50%,
+    rgba(180, 130, 70, 0.08) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+}
+
+.shimmer-golden-animate {
+  animation: shimmer-sweep 3s ease-in-out infinite;
+}
+
+/* ---- 仪式过渡 ---- */
+
+/* 纪元完成仪式 — 中央大字浮现 */
+@keyframes ritual-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+    filter: blur(8px);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.02) translateY(-5px);
+    filter: blur(2px);
+  }
+}
+
+.animate-ritual {
+  animation: ritual-appear 2.8s ease-out forwards;
+}
+
+/* 圣光涌入 — 页面内容出现时的光晕 */
+@keyframes divine-entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.animate-divine-enter {
+  animation: divine-entrance 0.6s ease-out forwards;
+}
+
+/* ---- 纪元图标光环 ---- */
+
+@keyframes icon-halo {
+  0%, 100% {
+    text-shadow: 0 0 8px rgba(180, 130, 70, 0.15);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(180, 130, 70, 0.35), 0 0 40px rgba(180, 130, 70, 0.15);
+  }
+}
+
+.animate-halo {
+  animation: icon-halo 3s ease-in-out infinite;
+}
+
+/* ---- 输入框 focus 金色光纹 ---- */
+
+@keyframes focus-glow-border {
+  0%, 100% {
+    box-shadow: 0 0 0 1px rgba(180, 130, 70, 0.15), 0 0 8px rgba(180, 130, 70, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(180, 130, 70, 0.30), 0 0 16px rgba(180, 130, 70, 0.10);
+  }
+}
+
+.input-divine:focus {
+  border-color: rgba(180, 130, 70, 0.40);
+  animation: focus-glow-border 2s ease-in-out infinite;
+  outline: none;
+}
+
+/* ---- 分组标题装饰线 ---- */
+
+.divider-divine {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.divider-divine::before,
+.divider-divine::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(240 6% 90%), transparent);
+}
+
+/* ---- 创世按钮特效 ---- */
+
+@keyframes genesis-button-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(180, 130, 70, 0.20), 0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(180, 130, 70, 0.35), 0 0 60px rgba(180, 130, 70, 0.15), 0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.btn-genesis {
+  background: linear-gradient(135deg, #B4823E 0%, #D4A574 50%, #B4823E 100%);
+  background-size: 200% 200%;
+  animation: genesis-button-glow 3s ease-in-out infinite;
+  transition: all 0.3s ease-out;
+}
+
+.btn-genesis:hover {
+  background-position: 100% 100%;
+  box-shadow: 0 0 40px rgba(180, 130, 70, 0.40), 0 0 80px rgba(180, 130, 70, 0.20);
+  transform: translateY(-1px);
+}
+
+/* ---- 完成纪元金色按钮 ---- */
+
+.btn-finalize {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #B4823E 0%, #C99B5C 100%);
+}
+
+.btn-finalize::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.20),
+    transparent
+  );
+  transition: left 0.5s ease-out;
+}
+
+.btn-finalize:hover::before {
+  left: 100%;
+}
+
+/* ---- 卷轴感滚动条（亮色模式） ---- */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(240 5% 85%);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(240 5% 75%);
+}
+
+/* ---- 文本光标闪烁 ---- */
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #B4823E;
+  margin-left: 2px;
+  animation: cursor-blink 0.8s ease-in-out infinite;
+  vertical-align: text-bottom;
 }
