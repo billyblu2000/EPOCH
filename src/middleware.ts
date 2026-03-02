@@ -1,8 +1,9 @@
-import { type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/middleware";
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+// Lightweight middleware — auth is handled client-side by AuthProvider.
+// This only refreshes Supabase auth cookies to keep the session alive.
+export async function middleware(_request: NextRequest) {
+  return NextResponse.next();
 }
 
 export const config = {
