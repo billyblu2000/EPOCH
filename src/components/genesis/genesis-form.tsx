@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sparkles, X, Plus } from "lucide-react";
+import { Sparkles, X, Plus, RotateCcw } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ interface GenesisFormProps {
   onSubmit: (data: GenesisFormType) => void;
   defaultValues?: Partial<GenesisFormValues>;
   isDisabled?: boolean;
+  isRegenerate?: boolean;
 }
 
 const sectionVariants = {
@@ -28,7 +29,7 @@ const sectionVariants = {
   }),
 };
 
-export function GenesisFormComponent({ onSubmit, defaultValues, isDisabled }: GenesisFormProps) {
+export function GenesisFormComponent({ onSubmit, defaultValues, isDisabled, isRegenerate }: GenesisFormProps) {
   const [traitInput, setTraitInput] = useState("");
 
   const {
@@ -328,8 +329,12 @@ export function GenesisFormComponent({ onSubmit, defaultValues, isDisabled }: Ge
             type="submit"
             className="btn-genesis group relative inline-flex items-center gap-2.5 rounded-lg px-10 py-3.5 text-sm font-medium text-white tracking-wide transition-all duration-300"
           >
-            <Sparkles className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.5} />
-            <span className="font-serif tracking-widest">AI 创世</span>
+            {isRegenerate ? (
+              <RotateCcw className="h-4 w-4 transition-transform duration-300 group-hover:-rotate-45" strokeWidth={1.5} />
+            ) : (
+              <Sparkles className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.5} />
+            )}
+            <span className="font-serif tracking-widest">{isRegenerate ? "重新创世" : "AI 创世"}</span>
           </button>
         </motion.div>
       )}
