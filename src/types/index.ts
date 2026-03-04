@@ -59,6 +59,7 @@ export interface GenesisForm {
   novel_function: string;
   core_synopsis: string;
   basic_worldview: string;
+  notes: string;
 }
 
 export interface Genesis {

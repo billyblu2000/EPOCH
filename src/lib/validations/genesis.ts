@@ -23,6 +23,9 @@ export const genesisFormSchema = z.object({
   novel_function: z.string().default(""),
   core_synopsis: z.string().default(""),
   basic_worldview: z.string().default(""),
+
+  // 备注
+  notes: z.string().default(""),
 });
 
 export type GenesisFormValues = z.infer<typeof genesisFormSchema>;

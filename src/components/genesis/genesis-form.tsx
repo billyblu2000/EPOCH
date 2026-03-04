@@ -52,6 +52,7 @@ export function GenesisFormComponent({ onSubmit, defaultValues, isDisabled, isRe
       novel_function: "",
       core_synopsis: "",
       basic_worldview: "",
+      notes: "",
       ...defaultValues,
     },
   });
@@ -87,6 +88,7 @@ export function GenesisFormComponent({ onSubmit, defaultValues, isDisabled, isRe
       novel_function: data.novel_function,
       core_synopsis: data.core_synopsis,
       basic_worldview: data.basic_worldview,
+      notes: data.notes,
     };
     onSubmit(formData);
   };
@@ -296,6 +298,17 @@ export function GenesisFormComponent({ onSubmit, defaultValues, isDisabled, isRe
               disabled={isDisabled}
               className="input-divine resize-none"
               {...register("basic_worldview")}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="notes">备注</Label>
+            <Textarea
+              id="notes"
+              placeholder="任何想要补充的内容..."
+              rows={3}
+              disabled={isDisabled}
+              className="input-divine resize-none"
+              {...register("notes")}
             />
           </div>
         </div>

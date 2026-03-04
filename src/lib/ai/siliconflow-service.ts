@@ -115,6 +115,7 @@ function genesisUserPrompt(input: GenesisForm): string {
 小说功能：${input.novel_function}
 核心梗概：${input.core_synopsis}
 基础世界观：${input.basic_worldview}
+备注：${input.notes}
 
 请生成创世书。`;
 }

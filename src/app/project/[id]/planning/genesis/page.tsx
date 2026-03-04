@@ -270,7 +270,6 @@ export default function GenesisPage() {
           >
             {/* 右栏头部 */}
             <div className="shrink-0 px-7 py-5 border-b border-border/40">
-              <h2 className="font-serif text-sm tracking-[0.15em] text-muted-foreground">结构化输入</h2>
             </div>
 
             {/* 右栏可滚动内容区 */}
@@ -292,6 +291,7 @@ export default function GenesisPage() {
                     novel_function: formData.novel_function,
                     core_synopsis: formData.core_synopsis,
                     basic_worldview: formData.basic_worldview,
+                    notes: formData.notes,
                   } : undefined}
                 />
               </div>
