@@ -17,8 +17,8 @@ const MODEL_REGISTRY: Record<string, ModelConfig> = {
     provider: "siliconflow",
     model: "Pro/MiniMaxAI/MiniMax-M2.5",
     baseURL: "https://api.siliconflow.cn/v1",
-    temperature: 0.8,
-    maxTokens: 4096,
+    temperature: 1,
+    maxTokens: 8192,
   },
 
   // 神世纪 — 世界观构建
